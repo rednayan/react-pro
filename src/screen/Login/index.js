@@ -1,13 +1,14 @@
 import React, {useState} from 'react'
-import { Grid, Tabs, Tab ,Typography,TextField,Stack,Button,Box} from '@mui/material'
+import { Grid, Tabs, Tab} from '@mui/material'
 import backgroundImg from "../../assets/backgroundImg.jpg"
 import SignUp from '../../component/SignUp';
+import SignIn from '../../component/SignIn';
 const Login = () => {
   const [activeTabId,setActiveTabId] = useState(0);
   return (
     <div> 
-    <Grid container sx={{backgroundImage:`url(${backgroundImg})`,height:"100vh"}}>
-      <Grid item xs={7}>
+    <Grid container sx={{height:"93vh"}}>
+      <Grid item xs={7} sx = {{backgroundImage:`url(${backgroundImg})`,backgroundRepeat:"no-repeat"}}>
       </Grid>
       <Grid item xs={5}> 
         <Tabs 
@@ -22,30 +23,7 @@ const Login = () => {
         </Tabs>
 
         {activeTabId === 0 && (
-          <>
-            <Stack spacing={2} sx={{margin:"70px 20px"}}>
-                <Typography
-                    variant="h6"
-                >
-                  Sign In
-                </Typography>
-                <TextField 
-                  label="email or phone"
-                  variant = "outlined"
-                  />
-                <TextField 
-                  label="password"
-                  variant = "outlined"
-                  type="password"
-                  />
-                <Button
-                  variant ="contained"
-                >
-                  Next
-                </Button>
-
-              </Stack>
-          </>
+          <SignIn />
         )} 
          {activeTabId === 1 && (
           <SignUp/>
