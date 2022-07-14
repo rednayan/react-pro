@@ -49,7 +49,9 @@ const SignIn = () => {
         if(!emailError && email !=="" && !passwordError && password !== ""){
             console.log("submit");
             const inputs = { email, password}
-            await userLogin(inputs);  
+            setLoading(true);
+            const response  = await userLogin(inputs);;
+            console.log(response);
         }
         else{
             setEmailError(true);
