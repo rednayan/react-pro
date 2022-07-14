@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {useState} from 'react'
+import { userSignup } from '../../service/yuri';
 import { Typography,TextField,Stack,Button,Link} from '@mui/material'
 
 const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
 const PWD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+const NAME_REGEX = /^[A-Za-z]+$/;
 
 function SignUp() {
   const [emailError,setEmailError] = useState(false);
@@ -18,16 +20,41 @@ function SignUp() {
   const [lastName,setLastName] = useState('');
   const [firstNameError,setFirstNameError] = useState(false);
   const [lastNameError,setlastNameError] = useState(false);
+  const [lastNameErrorText,setLastNameErrorText] = useState('');
+  const [firstNameErrorText,setFirstNameErrorText] = useState('');
+
 
   function checkEmailError ()  {
     if(!email.toLowerCase().match(EMAIL_REGEX) ){
         setEmailError(true)
         setEmailErrorText("invalid mail")
     }else{
-        setEmailError(false)
-        setEmailErrorText("")
+        setEmailError(false);
+        setEmailErrorText("");
     }
 }
+
+  function checkFirstNameError(){
+    if(!firstName.match(NAME_REGEX)){
+      setFirstNameError(true);
+      setFirstNameErrorText('only letters allowed');
+    }else{
+      setFirstNameError(false);
+      setFirstNameErrorText('');
+    }
+  }
+
+  function checkLastNameError(){
+    if(!lastName.match(NAME_REGEX)){
+      setlastNameError(true);
+      setLastNameErrorText('only letters allowed');
+    }else{
+      setlastNameError(false);
+      setLastNameErrorText('');
+    }
+  }
+
+
   const handleEmailChange = (e) =>{
     setEmail(e.target.value);
     checkEmailError();
@@ -58,23 +85,32 @@ function checkConfirmError() {
 
 const handlePasswordChange = (e) =>{
   setPassword(e.target.value);
-  checkPasswordError();
+    checkPasswordError();
 }
 const handleFirstName = (e) => {
   setFirstName(e.target.value);
+  checkFirstNameError();
 } 
 
-const handleLastNAme = (e) => {
+const handleLastName = (e) => {
   setLastName(e.target.value);
-} 
-const handleSubmit = () => {
+  checkLastNameError();
+}
+
+
+
+const handleSubmit = async () => {
     if(!emailError && email !=="" && !passwordError && password !== "")
-      console.log('submit');
+    {
+      setEmailError(false);
+      setPasswordError(false);
+    }
     else{
         setEmailError(true);
         setPasswordError(true);
         console.log('error');
     }
+
     if(email === "")
         setEmailErrorText("empty field");
     else
@@ -83,14 +119,35 @@ const handleSubmit = () => {
         setPasswordErrorText("empty field")
     else
         setPasswordErrorText("");
-    if(firstName === "")
-      setFirstNameError("empty field")
-      else
-      setFirstNameError("")
-    if(lastName === "")
-      setlastNameError("empty field")
-    else
-      setlastNameError("")
+    if(firstName === ""){
+      setFirstNameError(true);
+      setFirstNameErrorText("empty field")
+    }
+    else{
+      setFirstNameError(false);
+      setFirstNameErrorText("")
+    }
+    if(lastName === ""){
+      setlastNameError(true);
+      setLastNameErrorText("empty field")
+    }
+    else{
+      setlastNameError(false);
+      setLastNameErrorText("")
+    }
+    const inputs = {email,password,firstName,lastName};
+    const response = await userSignup(inputs).then((response) => {
+      if(!response){
+        setEmailError(false);
+        setEmailErrorText('');
+      }
+      else if(response){
+        setEmailError(true);
+        setEmailErrorText('email already in use');
+      }
+    }).catch((error) => {
+      console.log('error');
+    });
 }
 
   return (
@@ -107,15 +164,15 @@ const handleSubmit = () => {
                       label="First Name"
                       variant = "outlined"
                       onChange = {handleFirstName}
-                      helperText = {firstNameError}
+                      helperText = {firstNameErrorText}
                       sx={{width:"100%"}}
                       />
                     <TextField 
                       error = {lastNameError}
                       label="Last Name"
                       variant = "outlined"
-                      onChange = {handleLastNAme}
-                      helperText = {lastNameError}
+                      onChange = {handleLastName}
+                      helperText = {lastNameErrorText}
                       sx={{width:"100%"}}
                       />
                   </Stack>

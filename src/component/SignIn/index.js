@@ -1,5 +1,6 @@
-import {useEffect, useState} from 'react';
-import {Typography,Stack,Button,TextField} from '@mui/material';
+import {useEffect, useState , useCallback} from 'react';
+import { useNavigate } from 'react-router-dom';
+import {Typography,Stack,TextField} from '@mui/material';
 import {LoadingButton} from '@mui/lab'
 import { userLogin } from '../../service/yuri';
 const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
@@ -13,6 +14,7 @@ const SignIn = () => {
     const [passwordError,setPasswordError] = useState(false);
     const [password,setPassword] = useState('');
     const [loading,setLoading] = useState(false);
+    const navigate  = useNavigate();
     
 
     function checkEmailError ()  {
@@ -38,26 +40,38 @@ const SignIn = () => {
     const handlePasswordChange = (e) =>{
         setPassword(e.target.value);
         checkPasswordError();
+       
+   
     }
     const handleEmailChange = (e) =>{
         setEmail(e.target.value);
         checkEmailError();
     }
 
-
     const handleSubmit = async() =>{
         if(!emailError && email !=="" && !passwordError && password !== ""){
-            console.log("submit");
-            const inputs = { email, password}
-            setLoading(true);
-            const response  = await userLogin(inputs);;
-            console.log(response);
+                const inputs = { email, password}
+                setLoading(true);
+                const response = await userLogin(inputs).then((response) => {
+                    setLoading(false);
+                    if(response){
+                        localStorage.setItem('userJWT', "itsajwttokentoauth");
+                        navigate('/');
+                    }else{
+                        alert("invalid email/password");
+                    }
+                }).catch((error)=>{
+                    setLoading(false);
+                    console.log('error', error)
+                })
+                
         }
         else{
             setEmailError(true);
             setPasswordError(true);
             console.log('error');
         }
+
         if(email === "") setEmailErrorText("empty field");
         else setEmailErrorText("");
         if(password === "") setPasswordErrorText("empty field")
