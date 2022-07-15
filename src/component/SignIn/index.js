@@ -1,4 +1,4 @@
-import {useEffect, useState , useCallback} from 'react';
+import {useEffect, useState , useCallback , useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
 import {Typography,Stack,TextField} from '@mui/material';
 import {LoadingButton} from '@mui/lab'
@@ -10,14 +10,15 @@ const SignIn = () => {
     const [emailError,setEmailError] = useState(false);
     const [email,setEmail] = useState('');
     const [emailErrorText,setEmailErrorText] = useState('');
+    const [password,setPassword] = useState('');
     const [passwordErrorText,setPasswordErrorText] = useState('');
     const [passwordError,setPasswordError] = useState(false);
-    const [password,setPassword] = useState('');
     const [loading,setLoading] = useState(false);
     const navigate  = useNavigate();
     
 
     function checkEmailError ()  {
+        console.log(email);
         if(!email.toLowerCase().match(EMAIL_REGEX)){
             setEmailError(true)
             setEmailErrorText("invalid mail")
@@ -40,8 +41,6 @@ const SignIn = () => {
     const handlePasswordChange = (e) =>{
         setPassword(e.target.value);
         checkPasswordError();
-       
-   
     }
     const handleEmailChange = (e) =>{
         setEmail(e.target.value);
@@ -50,7 +49,7 @@ const SignIn = () => {
 
     const handleSubmit = async() =>{
         if(!emailError && email !=="" && !passwordError && password !== ""){
-                const inputs = { email, password}
+                const inputs = {email, password}
                 setLoading(true);
                 const response = await userLogin(inputs).then((response) => {
                     setLoading(false);
@@ -78,6 +77,7 @@ const SignIn = () => {
         else setPasswordErrorText("");
     }
 
+
     return (
         <form>
             <Stack spacing={2} sx={{margin:"20px"}}>
@@ -103,6 +103,7 @@ const SignIn = () => {
                     autoComplete='current-password'
                     helperText = {passwordErrorText}
                 />
+                
             <LoadingButton
             loading ={loading}
             variant ="contained"
