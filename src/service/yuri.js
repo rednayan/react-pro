@@ -1,29 +1,12 @@
 import axios from 'axios'
 
-//make request  
+//make request
 export const makeRequest = async () => {
-        const response = await axios.get("http://universities.hipolabs.com/search?country=United+Kingdom").then((responses) => {
-            const datas = responses.data.map((data) => {
-                const Name = data.name;
-                const domain = data.domains.map((domainName) => {
-                    return domainName;
-                })
-                const webPages = data.web_pages.map((webPage) => {
-                    return webPage;
-                })
-                const country = data.country;
-                
-                const dataUser = {
-                    name: Name,
-                    domainName : domain,
-                    webPageName : webPages,
-                    countryName : country,
-                }
-                return dataUser;
-            })
-            return [datas];
-        });
-        return response;
+    const URL = "http://universities.hipolabs.com/search?country=United+Kingdom";
+    const response = await axios.get(URL).then((response) => {
+        return response;    
+    });
+    return response
 }
 
 
