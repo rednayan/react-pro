@@ -99,7 +99,8 @@ const handleLastName = (e) => {
 
 
 
-const handleSubmit = async () => {
+const handleSubmit = async (e) => {
+    e.preventDefault();
     if(!emailError && email !=="" && !passwordError && password !== "")
     {
       setEmailError(false);

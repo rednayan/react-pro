@@ -26,7 +26,7 @@ const Login = () => {
           <SignIn />
         )} 
          {activeTabId === 1 && (
-          <SignUp />
+            <SignUp />
         )} 
       </Grid>
     </Grid>

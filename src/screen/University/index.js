@@ -1,18 +1,17 @@
 import {useEffect,useState,useRef} from 'react'
 import { useNavigate } from 'react-router-dom';
 import { makeRequest } from '../../service/yuri'
-import {Card,CardContent,Typography,Stack} from "@mui/material"
-import axios from 'axios';
+import {Card,CardContent,Typography,Stack, LinearProgress} from "@mui/material"
 
-const Blogs = () => {
+const University = () => {
     const navigate  = useNavigate();
     const [post,setPost] = useState([]);
   
-    const getPosts = () => {
-        makeRequest().then((resp)=> {
+    const  getPosts = async () => {
+        await makeRequest().then((resp)=> {
           setPost(resp.data)
       })
-    };
+    };   
 
     useEffect(() => {
         const userJWT = localStorage.getItem('userJWT')
@@ -23,7 +22,7 @@ const Blogs = () => {
     return(
         <Stack direction="row" justifyContent="space-between" sx={{flexWrap:"wrap"}}>
          {post.map((data) => 
-            <Card sx={{ width: 200, marginBottom:5 }}>
+            <Card sx={{ width: 200, marginBottom:5  }}>
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
                 {data.name}
@@ -41,4 +40,5 @@ const Blogs = () => {
     )
 }
 
-export default Blogs
+export default University
+
