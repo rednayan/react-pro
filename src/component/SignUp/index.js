@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect , useRef} from 'react'
 import {useState} from 'react'
 import { userSignup } from '../../service/yuri';
 import { Typography,TextField,Stack,Button,Link} from '@mui/material'
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
 const PWD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
@@ -9,23 +11,27 @@ const NAME_REGEX = /^[A-Za-z]+$/;
 
 function SignUp() {
   const [emailError,setEmailError] = useState(false);
-  const [email,setEmail] = useState('');
+  // const [email,setEmail] = useState('');
+  const email = useRef();
   const [emailErrorText,setEmailErrorText] = useState('');
   const [passwordErrorText,setPasswordErrorText] = useState('');
   const [passwordError,setPasswordError] = useState(false);
   const [confirmPassword,setConfirmPassword] = useState('');
   const [confirmPasswordError,setConfirmPasswordError] = useState(false);
-  const [password,setPassword] = useState('');
+  // const [password,setPassword] = useState('');
+  const password = useRef();
   const [firstName,setFirstName] = useState('');
   const [lastName,setLastName] = useState('');
   const [firstNameError,setFirstNameError] = useState(false);
   const [lastNameError,setlastNameError] = useState(false);
   const [lastNameErrorText,setLastNameErrorText] = useState('');
   const [firstNameErrorText,setFirstNameErrorText] = useState('');
+  const navigate = useNavigate();
+  const {signup} = useAuth();
 
 
   function checkEmailError ()  {
-    if(!email.toLowerCase().match(EMAIL_REGEX) ){
+    if(!email.current.toLowerCase().match(EMAIL_REGEX) ){
         setEmailError(true)
         setEmailErrorText("invalid mail")
     }else{
@@ -56,12 +62,12 @@ function SignUp() {
 
 
   const handleEmailChange = (e) =>{
-    setEmail(e.target.value);
+    email.current = e.target.value
     checkEmailError();
 }
 
 function checkPasswordError () {
-  if(!password.match(PWD_REGEX)){
+  if(!password.current.match(PWD_REGEX)){
       setPasswordError(true);
       setPasswordErrorText("minimum 8 letters,1 number,1 special character")
   }
@@ -77,14 +83,14 @@ const handleConfirmPassword = (e) => {
 }
 
 function checkConfirmError() {
-  if(confirmPassword !== password){
+  if(confirmPassword !== password.current){
     setConfirmPasswordError(true);
   }
   else setConfirmPasswordError(false)
 }
 
 const handlePasswordChange = (e) =>{
-  setPassword(e.target.value);
+  password.current = e.target.value
     checkPasswordError();
 }
 const handleFirstName = (e) => {
@@ -101,7 +107,7 @@ const handleLastName = (e) => {
 
 const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!emailError && email !=="" && !passwordError && password !== "")
+    if(!emailError && email.current !=="" && !passwordError && password.current !== "")
     {
       setEmailError(false);
       setPasswordError(false);
@@ -112,11 +118,11 @@ const handleSubmit = async (e) => {
         console.log('error');
     }
 
-    if(email === "")
+    if(email.current === "")
         setEmailErrorText("empty field");
     else
         setEmailErrorText("");
-    if(password === "")
+    if(password.current === "")
         setPasswordErrorText("empty field")
     else
         setPasswordErrorText("");
@@ -136,19 +142,9 @@ const handleSubmit = async (e) => {
       setlastNameError(false);
       setLastNameErrorText("")
     }
-    const inputs = {email,password,firstName,lastName};
-    const response = await userSignup(inputs).then((response) => {
-      if(!response){
-        setEmailError(false);
-        setEmailErrorText('');
-      }
-      else if(response){
-        setEmailError(true);
-        setEmailErrorText('email already in use');
-      }
-    }).catch((error) => {
-      console.log('error');
-    });
+
+    await signup(email.current,password.current)
+    navigate('/');
 }
 
   return (
@@ -179,7 +175,6 @@ const handleSubmit = async (e) => {
                   </Stack>
                   <TextField 
                     error = {emailError}
-                    value = {email}
                     label="email"
                     variant = "outlined"
                     onChange = {handleEmailChange}
@@ -189,7 +184,6 @@ const handleSubmit = async (e) => {
                     <Stack direction="row" justifyContent="space-between" spacing={1}>
                     <TextField 
                       error = {passwordError}
-                      value = {password}
                       label="password"
                       variant = "outlined"
                       type="password"

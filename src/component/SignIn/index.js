@@ -3,23 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import {Typography,Stack,TextField} from '@mui/material';
 import {LoadingButton} from '@mui/lab'
 import { userLogin } from '../../service/yuri';
+import { useAuth } from '../../contexts/AuthContext';
 const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
 const PWD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
 const SignIn = () => {
     const [emailError,setEmailError] = useState(false);
-    const [email,setEmail] = useState('');
+    const email = useRef();
+    const password = useRef();
     const [emailErrorText,setEmailErrorText] = useState('');
-    const [password,setPassword] = useState('');
     const [passwordErrorText,setPasswordErrorText] = useState('');
     const [passwordError,setPasswordError] = useState(false);
     const [loading,setLoading] = useState(false);
     const navigate  = useNavigate();
+    const {login} = useAuth();
     
 
     function checkEmailError ()  {
-        console.log(email);
-        if(!email.toLowerCase().match(EMAIL_REGEX)){
+        if(!email.current.toLowerCase().match(EMAIL_REGEX)){
             setEmailError(true)
             setEmailErrorText("invalid mail")
         }else{
@@ -28,7 +29,7 @@ const SignIn = () => {
         }
     }
     function checkPasswordError () {
-        if(!password.match(PWD_REGEX)){
+        if(!password.current.match(PWD_REGEX)){
             setPasswordError(true);
             setPasswordErrorText("minimum 8 letters,1 number,1 special character")
         }
@@ -39,31 +40,21 @@ const SignIn = () => {
     }
     
     const handlePasswordChange = (e) =>{
-        setPassword(e.target.value);
+        password.current = e.target.value;
         checkPasswordError();
     }
     const handleEmailChange = (e) =>{
-        setEmail(e.target.value);
+        email.current = e.target.value;
         checkEmailError();
     }
 
     const handleSubmit = async() =>{
-        if(!emailError && email !=="" && !passwordError && password !== ""){
+        if(!emailError && email.current !=="" && !passwordError && password.current !== ""){
                 const inputs = {email, password}
                 setLoading(true);
-                const response = await userLogin(inputs).then((response) => {
-                    setLoading(false);
-                    if(response){
-                        localStorage.setItem('userJWT', "itsajwttokentoauth");
-                        navigate('/');
-                    }else{
-                        alert("invalid email/password");
-                    }
-                }).catch((error)=>{
-                    setLoading(false);
-                    console.log('error', error)
-                })
-                
+                await login(email.current,password.current).catch((error)=>alert(error.code));
+                setLoading(false);
+                navigate("/")
         }
         else{
             setEmailError(true);
@@ -71,9 +62,9 @@ const SignIn = () => {
             console.log('error');
         }
 
-        if(email === "") setEmailErrorText("empty field");
+        if(email.current === "") setEmailErrorText("empty field");
         else setEmailErrorText("");
-        if(password === "") setPasswordErrorText("empty field")
+        if(password.current === "") setPasswordErrorText("empty field")
         else setPasswordErrorText("");
     }
 

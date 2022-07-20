@@ -27,7 +27,7 @@ export const userSignup = ({emailId,password,firstName,lastName}) => {
 export const userLogin = ({email, password}) => { 
     const checkEmail = "default@gmail.com"
     const checkPassword = "default@012"
-    if(checkEmail === email && checkPassword === password)
+    if(checkEmail === email.current && checkPassword === password.current)
     {
         return Promise.resolve(true)
     }else{ 
