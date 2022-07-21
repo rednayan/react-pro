@@ -1,7 +1,7 @@
 import React, { useEffect, useState,useCallback} from 'react'
 import { db } from '../../firebase'
 import {collection,getDocs} from 'firebase/firestore'
-import {Card,Typography,CardContent,Stack} from '@mui/material'
+import {Card,Typography,CardContent,Stack,CardMedia} from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
 export default function DisplayBlogs() {
@@ -18,25 +18,38 @@ export default function DisplayBlogs() {
     useEffect(() =>{
         
     },[])
-
-
     return (
-    <Stack direction="row" spacing = {1} sx={{flexWrap:"wrap"}}>
+    <Stack direction="row" justifyContent="space-between" sx={{flexWrap:"wrap"}}>
     {blogs && blogs.map((blog) => {
         return(
-                <Card sx={{ width: 200}}>
-                <CardContent onClick={() => navigate(`/blogs/detailblog/${blog.id}`)}>
-                {blog.image && 
-                            <img  height="100px" width="150px" src = {blog.image}/>
-                    }
-                <Typography gutterBottom variant="h5" component="div">
-                    {blog.title}
-                </Typography>
-                <Typography gutterBottom variant="h7" component="div">
-                    {blog.user}
-                </Typography>
-                </CardContent>
-                </Card>      
+                <Card 
+                    sx={{ width: 450,
+                        margin:"10px",
+                        borderRadius:"10px",
+                        boxShadow:"0px -1px 15px 2px rgba(196,196,196,1)",
+                        backgroundColor:'#2c2c2e',
+                        color:"#ffffff"
+                        
+                        }}
+                
+                >
+                    <CardMedia
+                        onClick={() => navigate(`/blogs/detailblog/${blog.id}`)}
+                        component="img"
+                        image={blog.image}
+                        alt="Image "
+                        height="200px"
+                    />
+
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                            {blog.title}
+                        </Typography>
+                        <Typography gutterBottom variant="h7" component="div">
+                            {blog.user}
+                        </Typography>
+                    </CardContent>
+                </Card>     
         )
     })}
     </Stack>

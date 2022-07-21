@@ -60,7 +60,14 @@ export default function CreateBlog() {
 
 
   return (
-            <Stack spacing = {1} sx={{width: 400,position:"sticky",top:"0"}}>
+            <Stack spacing = {3} marginTop={1} padding ={2}
+                sx={{
+                        width: 400,
+                        position:"sticky",
+                        top:"0",
+                        borderRadius:"10px",
+                        boxShadow:"0px -1px 15px 2px rgba(196,196,196,1)"
+                        }}>
                 <TextField 
                     label="title" 
                     variant="outlined" 
