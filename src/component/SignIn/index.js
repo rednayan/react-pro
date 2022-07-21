@@ -84,7 +84,7 @@ const SignIn = () => {
                     onChange = {handleEmailChange}
                     autoComplete='user'
                     helperText = {emailErrorText}
-                    />
+                />
                 <TextField 
                     error = {passwordError}
                     label="password"
@@ -93,12 +93,11 @@ const SignIn = () => {
                     onChange = {handlePasswordChange}
                     autoComplete='current-password'
                     helperText = {passwordErrorText}
-                />
-                
+                /> 
             <LoadingButton
-            loading ={loading}
-            variant ="contained"
-            onClick={handleSubmit}
+                loading ={loading}
+                variant ="contained"
+                onClick={handleSubmit}
             >
             Next
             </LoadingButton>
