@@ -5,6 +5,7 @@ import { addDoc, collection } from 'firebase/firestore';
 import { storage } from '../../firebase'
 import { ref,uploadBytes,listAll,getDownloadURL } from 'firebase/storage'
 import { LoadingButton } from '@mui/lab';
+import { useAuth } from '../../contexts/AuthContext';
 
 
 export default function CreateBlog() {
@@ -15,6 +16,8 @@ export default function CreateBlog() {
     const [imageLoading,setImageLoading] = useState(false);
     const [submitLoading,setSubmitLoading] = useState(false);
     const [imageURL,setimageURL] = useState();
+    const [user,setUser] = useState();
+    const {currentUser} = useAuth();
 
     const handleDescription = (e) => {
         setDescription(e.target.value)
@@ -42,7 +45,7 @@ export default function CreateBlog() {
     const handleSubmit = async(e) => {
         e.preventDefault();
         setSubmitLoading(true)
-        await addDoc(blogCollectionRef,{title:title,description:description,image:imageURL}).then((response) => {
+        await addDoc(blogCollectionRef,{title:title,description:description,image:imageURL,user:user}).then((response) => {
             setDescription("");
             setTitle("");
             alert("uploaded")
@@ -51,7 +54,9 @@ export default function CreateBlog() {
         }); 
         setSubmitLoading(false);
     }
-
+    useEffect(() =>{
+        setUser(currentUser.email)
+    },[user])
 
 
   return (

@@ -16,7 +16,7 @@ const SignIn = () => {
     const [passwordError,setPasswordError] = useState(false);
     const [loading,setLoading] = useState(false);
     const navigate  = useNavigate();
-    const {login} = useAuth();
+    const {login,currentUser} = useAuth();
     
 
     function checkEmailError ()  {
@@ -54,7 +54,7 @@ const SignIn = () => {
                 setLoading(true);
                 await login(email.current,password.current).catch((error)=>alert(error.code));
                 setLoading(false);
-                navigate("/")
+                navigate("/blogs")
         }
         else{
             setEmailError(true);

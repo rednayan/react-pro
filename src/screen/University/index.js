@@ -14,8 +14,6 @@ const University = () => {
     };   
 
     useEffect(() => {
-        const userJWT = localStorage.getItem('userJWT')
-        if(!userJWT) navigate('/login');
         getPosts();
         },[])
 
