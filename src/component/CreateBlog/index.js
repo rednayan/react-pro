@@ -3,7 +3,7 @@ import { db} from '../../firebase'
 import {Button,TextareaAutosize,Stack, TextField,Grid} from "@mui/material" 
 import { addDoc, collection } from 'firebase/firestore';
 import { storage } from '../../firebase'
-import { ref,uploadBytes,listAll,getDownloadURL } from 'firebase/storage'
+import { ref,uploadBytes,getDownloadURL } from 'firebase/storage'
 import { LoadingButton } from '@mui/lab';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -56,7 +56,7 @@ export default function CreateBlog() {
     }
     useEffect(() =>{
         setUser(currentUser.email)
-    },[user])
+    },[])
 
 
   return (
@@ -78,7 +78,6 @@ export default function CreateBlog() {
                     aria-label="empty textarea"
                     placeholder="Description"
                     onChange = {handleDescription}
-                    sx={{}}
                     />
                 <Stack direction="row" alignItems="center">      
                     <input type="file" 

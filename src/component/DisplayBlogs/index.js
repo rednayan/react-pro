@@ -9,21 +9,22 @@ export default function DisplayBlogs() {
     const blogReference = collection(db,"Blogs")
     const navigate = useNavigate();
 
-    const getBlogs = async () => {   
-        const data = await getDocs(blogReference);
-        setBlogs(data.docs.map((doc) => ({...doc.data(),id:doc.id})))
-    }
-    getBlogs();
+   
 
     useEffect(() =>{
-        
+        const getBlogs = async () => {   
+            const data = await getDocs(blogReference);
+            setBlogs(data.docs.map((doc) => ({...doc.data(),id:doc.id})))
+        }
+        getBlogs();  
     },[])
+    
     return (
     <Stack direction="row" justifyContent="space-between" sx={{flexWrap:"wrap"}}>
     {blogs && blogs.map((blog) => {
         return(
                 <Card 
-                    sx={{ width: 450,
+                    sx={{ width: 425,
                         margin:"10px",
                         borderRadius:"10px",
                         boxShadow:"0px -1px 15px 2px rgba(196,196,196,1)",
@@ -42,11 +43,11 @@ export default function DisplayBlogs() {
                     />
 
                     <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
+                        <Typography gutterBottom variant="h5" component="div" sx={{letterSpacing:"2px"}}>
                             {blog.title}
                         </Typography>
-                        <Typography gutterBottom variant="h7" component="div">
-                            {blog.user}
+                        <Typography gutterBottom variant="h7" component="div" sx={{letterSpacing:"1px"}}>
+                            Author : {blog.user}
                         </Typography>
                     </CardContent>
                 </Card>     

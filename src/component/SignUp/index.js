@@ -144,7 +144,7 @@ const handleSubmit = async (e) => {
     }
 
     await signup(email.current,password.current)
-    navigate('/blogs');
+    navigate('/');
 }
 
   return (
