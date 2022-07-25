@@ -8,9 +8,7 @@ export default function DisplayBlogs() {
     const [blogs,setBlogs] = useState();
     const blogReference = collection(db,"Blogs")
     const navigate = useNavigate();
-
-   
-
+    
     useEffect(() =>{
         const getBlogs = async () => {   
             const data = await getDocs(blogReference);
