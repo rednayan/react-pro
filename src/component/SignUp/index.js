@@ -11,14 +11,12 @@ const NAME_REGEX = /^[A-Za-z]+$/;
 
 function SignUp() {
   const [emailError,setEmailError] = useState(false);
-  // const [email,setEmail] = useState('');
   const email = useRef();
   const [emailErrorText,setEmailErrorText] = useState('');
   const [passwordErrorText,setPasswordErrorText] = useState('');
   const [passwordError,setPasswordError] = useState(false);
-  const [confirmPassword,setConfirmPassword] = useState('');
+  const confirmPassword = useRef();
   const [confirmPasswordError,setConfirmPasswordError] = useState(false);
-  // const [password,setPassword] = useState('');
   const password = useRef();
   const [firstName,setFirstName] = useState('');
   const [lastName,setLastName] = useState('');
@@ -78,12 +76,12 @@ function checkPasswordError () {
 }
 
 const handleConfirmPassword = (e) => {
-  setConfirmPassword(e.target.value);
+  confirmPassword.current = e.target.value;
   checkConfirmError();
 }
 
 function checkConfirmError() {
-  if(confirmPassword !== password.current){
+  if(confirmPassword.current !== password.current){
     setConfirmPasswordError(true);
   }
   else setConfirmPasswordError(false)
