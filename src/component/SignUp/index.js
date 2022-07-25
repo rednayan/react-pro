@@ -113,17 +113,7 @@ const handleSubmit = async (e) => {
     else{
         setEmailError(true);
         setPasswordError(true);
-        console.log('error');
     }
-
-    if(email.current === "")
-        setEmailErrorText("empty field");
-    else
-        setEmailErrorText("");
-    if(password.current === "")
-        setPasswordErrorText("empty field")
-    else
-        setPasswordErrorText("");
     if(firstName === ""){
       setFirstNameError(true);
       setFirstNameErrorText("empty field")
@@ -141,10 +131,13 @@ const handleSubmit = async (e) => {
       setLastNameErrorText("")
     }
 
-    await signup(email.current,password.current).catch((error)=>{
-      alert(error)
+    await signup(email.current,password.current)
+    .then(() => navigate('/'))
+    .catch((error)=>{
+                        setEmailError(true)
+                        setPasswordError(true);
     })
-    navigate('/');
+    
 }
 
   return (
