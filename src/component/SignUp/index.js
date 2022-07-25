@@ -141,7 +141,9 @@ const handleSubmit = async (e) => {
       setLastNameErrorText("")
     }
 
-    await signup(email.current,password.current)
+    await signup(email.current,password.current).catch((error)=>{
+      alert(error)
+    })
     navigate('/');
 }
 

@@ -39,9 +39,8 @@ export default function DetailBlog(){
                   />
                   </Card>
                   <CardContent sx={{position: "absolute",
-                                    top: "94%",
                                     left: "50%",
-                                    transform: "translate(-50%, -50%)",
+                                    transform: "translate(-50%, 185%)",
                                     color:"#ffffff",
                                   }}>
                   <Typography variant="h2" component="div" sx={{textTransform:"uppercase",letterSpacing:"10px"}}>

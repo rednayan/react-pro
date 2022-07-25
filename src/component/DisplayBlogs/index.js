@@ -18,7 +18,7 @@ export default function DisplayBlogs() {
     },[])
     
     return (
-    <Stack direction="row" justifyContent="space-between" sx={{flexWrap:"wrap"}}>
+    <Stack direction="row"  sx={{flexWrap:"wrap"}}>
     {blogs && blogs.map((blog) => {
         return(
                 <Card 
