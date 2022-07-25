@@ -38,6 +38,8 @@ export default function CreateBlog() {
         setImageLoading(false);
         await getDownloadURL(imageRef).then((url) => {
             setimageURL(url)
+        }).catch((error) => {
+            alert(error);
         })
     }
 
