@@ -50,7 +50,7 @@ export default function CreateBlog() {
             setTitle("");
             alert("uploaded")
         }).catch((error) => {
-            alert(error)
+            alert(error);
         }); 
         setSubmitLoading(false);
     }

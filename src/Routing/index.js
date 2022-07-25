@@ -26,9 +26,9 @@ export default function Routing() {
                 <Button component={Link} to={'/'}>Champions</Button>
                 <Button component={Link} to={'/university'}>University</Button>
                 {!currentUser? 
-                <Button component={Link} to={'/login'}>Login</Button> 
-                :
-                <Button onClick = {handleLogout}>Logout</Button>    
+                  <Button component={Link} to={'/login'}>Login</Button> 
+                  :
+                  <Button onClick = {handleLogout}>Logout</Button>    
               }
             </Stack>
           </AppBar>

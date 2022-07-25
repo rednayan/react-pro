@@ -22,8 +22,6 @@ function App() {
           <Routing />
         </AuthProvider>
       </Router>
-
   )
 }
-
 export default App;
