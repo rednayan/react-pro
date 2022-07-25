@@ -51,20 +51,16 @@ const SignIn = () => {
         if(!emailError && email.current !=="" && !passwordError && password.current !== ""){
                 const inputs = {email, password}
                 setLoading(true);
-                await login(email.current,password.current).catch((error)=>alert(error.code));
+                await login(email.current,password.current)
+                .then(() => navigate("/blogs"))
+                .catch((error) => {
+                        setEmailError(true)
+                        setEmailErrorText("empty field");
+                        setPasswordErrorText("empty field");
+                        setPasswordError(true);
+                })
                 setLoading(false);
-                navigate("/blogs")
         }
-        else{
-            setEmailError(true);
-            setPasswordError(true);
-            console.log('error');
-        }
-
-        if(email.current === "") setEmailErrorText("empty field");
-        else setEmailErrorText("");
-        if(password.current === "") setPasswordErrorText("empty field")
-        else setPasswordErrorText("");
     }
 
 

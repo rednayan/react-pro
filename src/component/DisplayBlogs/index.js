@@ -28,7 +28,6 @@ export default function DisplayBlogs() {
                         boxShadow:"0px -1px 15px 2px rgba(196,196,196,1)",
                         backgroundColor:'#2c2c2e',
                         color:"#ffffff"
-                        
                         }}
                 
                 >
