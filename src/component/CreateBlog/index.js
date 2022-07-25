@@ -1,11 +1,11 @@
 import React,{useEffect, useState} from 'react'
 import { db} from '../../firebase'
-import {Button,TextareaAutosize,Stack, TextField,Grid} from "@mui/material" 
 import { addDoc, collection } from 'firebase/firestore';
 import { storage } from '../../firebase'
 import { ref,uploadBytes,getDownloadURL } from 'firebase/storage'
-import { LoadingButton } from '@mui/lab';
 import { useAuth } from '../../contexts/AuthContext';
+import { LoadingButton } from '@mui/lab';
+import {Button,TextareaAutosize,Stack, TextField,Grid} from "@mui/material" 
 
 
 export default function CreateBlog() {
@@ -27,9 +27,8 @@ export default function CreateBlog() {
     }
     const handleImage = (e) => {
         setImage(e.target.files[0]);
-   
     }
-    const uploadImage = async() => {
+    const uploadImage = async(e) => {
         const imageRef = ref(storage,`images/${image.name}`);
         setImageLoading(true);
         await uploadBytes(imageRef,image).then((response)=>{
@@ -79,13 +78,15 @@ export default function CreateBlog() {
                     placeholder="Description"
                     onChange = {handleDescription}
                     />
-                <Stack direction="row" alignItems="center">      
-                    <input type="file" 
+                <Stack direction="row" alignItems="center"> 
+                     
+                    <input type="file"
                         onChange={handleImage}
-                        />
+                    />    
                     <LoadingButton
                         loading = {imageLoading}
                         variant = "outlined"
+                        component = "label"
                         onClick={uploadImage}
                         >
                         Upload Image

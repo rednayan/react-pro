@@ -2,7 +2,6 @@ import {useEffect, useState , useCallback , useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
 import {Typography,Stack,TextField} from '@mui/material';
 import {LoadingButton} from '@mui/lab'
-import { userLogin } from '../../service/yuri';
 import { useAuth } from '../../contexts/AuthContext';
 const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
 const PWD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
