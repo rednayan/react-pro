@@ -41,8 +41,9 @@ export default function DetailBlog(){
       <>
       {blog && 
       <Box>
-         {(currentUser.email === blog.user) && 
-        <Stack  direction="row" justifyContent="flex-end" spacing ={1} margin={1}>
+      <Stack alignItems = "center" justifyContent = "center" sx={{backgroundImage:`url(${blog.image})`,backgroundRepeat:"no-repeat",backgroundSize:"cover"}}>
+      {(currentUser.email === blog.user) && 
+        <Stack  direction="row" justifyContent="flex-end" spacing ={1} marginTop="30px" width="98%">
           <Button 
             variant = "contained"
             onClick={handleUpdate}
@@ -58,13 +59,12 @@ export default function DetailBlog(){
           </Button>
         </Stack>
         }
-      <Stack alignItems = "center" justifyContent = "center" sx={{backgroundImage:`url(${blog.image})`,backgroundRepeat:"no-repeat",backgroundSize:"100%"}}>
                   <Card 
                   sx={{ width: "80%",
                       boxShadow:"0px -1px 15px 2px rgba(196,196,196,1)",
                       backgroundColor:'#2c2c2e',
                       color:"#ffffff",
-                      margin:"30px 0px 30px"
+                      margin:"30px 0px"
                       }}
               
                 >
@@ -78,7 +78,7 @@ export default function DetailBlog(){
                   </Card>
                   <CardContent sx={{position: "absolute",
                                     left: "50%",
-                                    transform: "translate(-50%, 190%)",
+                                    transform: "translate(-50%, -50%)",
                                     color:"#ffffff",
                                   }}>
                   <Typography variant="h2" component="div" sx={{textTransform:"uppercase",letterSpacing:"10px"}}>
@@ -106,6 +106,7 @@ export default function DetailBlog(){
                   </Stack>
                 </Card>    
         </Stack>
+        
       </Box>
       }
       </>

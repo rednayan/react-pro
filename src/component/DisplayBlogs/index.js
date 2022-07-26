@@ -18,7 +18,7 @@ export default function DisplayBlogs() {
     },[])
     
     return (
-    <Stack direction="row"  sx={{flexWrap:"wrap"}}>
+    <Stack direction="row"  justifyContent = "space-between" sx={{flexWrap:"wrap"}}>
     {blogs && blogs.map((blog) => {
         return(
                     <Card 
@@ -26,7 +26,7 @@ export default function DisplayBlogs() {
                             margin:"10px",
                             borderRadius:"10px",
                             boxShadow:"0px -1px 15px 2px rgba(196,196,196,1)",
-                            backgroundColor:'#2c2c2e',
+                            backgroundColor:'#1c1c1e',
                             color:"#ffffff"
                             }}
                     
@@ -40,7 +40,7 @@ export default function DisplayBlogs() {
                         />
 
                         <CardContent>
-                            <Typography gutterBottom variant="h5" component="div" sx={{letterSpacing:"2px"}}>
+                            <Typography gutterBottom variant="h7" component="div" sx={{letterSpacing:"2px",textTransform:"uppercase"}}>
                                 {blog.title}
                             </Typography>
                             <Typography gutterBottom variant="h7" component="div" sx={{letterSpacing:"1px"}}>

@@ -63,14 +63,15 @@ export default function CreateBlog() {
 
 
   return (
-            <Grid container justifyContent="center" alignItems = "center" sx={{height:"93vh"}}>
+            <Grid container justifyContent="center" alignItems = "center" sx={{height:"90vh",backgroundColor:"#1c1c1e"}}>
                 <Stack spacing = {3} marginTop={1} padding ={2}
                 sx={{
                         width: 600,
                         borderRadius:"10px",
-                        boxShadow:"0px -1px 15px 2px rgba(196,196,196,1)",
+                        boxShadow:"0px -1px 15px 2px rgba(196,196,196,0.2)",
+                        backgroundColor:"#ffffff"
                         }}>
-                <Typography variant="h5" component="div" sx={{letterSpacing:"3px",textTransform:"uppercase"}}>
+                <Typography variant="h5" component="div" sx={{letterSpacing:"3px",textTransform:"uppercase",color:"#1c1c1e"}}>
                                Create Champion Blog
                 </Typography>
                 <TextField 

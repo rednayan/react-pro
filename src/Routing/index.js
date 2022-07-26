@@ -19,19 +19,19 @@ import {
 export default function Routing() {
   const {logout,currentUser}  = useAuth();
   const handleLogout = async () => {
-    await logout().then(() => alert("signed out"));
+    await logout();
   }
   return (
     <>
     <AppBar position="static"  sx={{boxShadow:"none",backgroundColor:"#ffffff"}}>
-            <Stack direction="row" spacing={2} sx={{width:"100%"}}>
-                <Button component={Link} to={'/'}>Champions Blog</Button>
+            <Stack direction="row" spacing={2} sx={{width:"100%",height:"10vh",backgroundColor:"#1c1c1e"}}>
+                <Button component={Link} to={'/'} sx={{color:"#ffffff"}}>Champion Blogs</Button>
+                <Button component={Link} to={'/create-blog'} sx={{color:"#ffffff"}}>Create Blog</Button>
                 {/* <Button component={Link} to={'/university'}>University</Button> */}
-                <Button component={Link} to={'/create-blog'}>Create Blog</Button>
                 {!currentUser? 
-                  <Button component={Link} to={'/login'}>Login</Button> 
+                  <Button component={Link} to={'/login'} sx={{color:"#30d158"}}>Login</Button> 
                   :
-                  <Button onClick = {handleLogout}>Logout</Button>    
+                  <Button onClick = {handleLogout} sx={{color:"#ff453a"}} >Logout</Button>    
                 }
             </Stack>
           </AppBar>
@@ -41,7 +41,7 @@ export default function Routing() {
               <Route exact path = "/blogs/detailblog/:id" element= {<PrivateRoute><DetailBlog /></PrivateRoute>}></Route>
               <Route exact path = "/blogs/detailblog/:id/update" element= {<PrivateRoute><UpdateBlog /></PrivateRoute>}></Route>
               <Route exact path = "/create-blog" element= {<PrivateRoute><CreateBlog /></PrivateRoute>}></Route>
-              <Route exact path = "/university" element= {<University />}></Route>
+              {/* <Route exact path = "/university" element= {<University />}></Route> */}
               <Route path="*" element={<PageNotFound />} />
           </Routes>
     </>
