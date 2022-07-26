@@ -12,14 +12,12 @@ import {Button,TextareaAutosize,Stack, TextField,Grid,Typography} from "@mui/mat
 export default function UpdateBlog() {
     const {id} = useParams();
     const docRef = doc(db, "Blogs", `${id}`);
-
-
-    const [description,setDescription] = useState();
+    const [description,setDescription] = useState("");
     const [image,setImage] = useState();
-    const [title,setTitle] = useState();
+    const [title,setTitle] = useState("");
     const [imageLoading,setImageLoading] = useState(false);
     const [submitLoading,setSubmitLoading] = useState(false);
-    const [imageURL,setimageURL] = useState();
+    const [imageURL,setimageURL] = useState("");
     const [user,setUser] = useState();
     const {currentUser} = useAuth();
     const navigate = useNavigate();
@@ -61,12 +59,14 @@ export default function UpdateBlog() {
     }
     useEffect(() =>{
         setUser(currentUser.email)
-        // const getDocDetails = async (e) =>{  
-        //     await getDoc(docRef).then((response) => {
-        //         setTitle(response.data().title);
-        //     })
-        //   }
-        // getDocDetails();
+        const getDocDetails = async (e) =>{  
+            await getDoc(docRef).then((response) => {
+                setTitle(response.data().title);
+                setDescription(response.data().description);
+                setimageURL(response.data().image);
+            })
+          }
+        getDocDetails();
     },[])
 
 
@@ -82,11 +82,13 @@ export default function UpdateBlog() {
                                Update Champion Blog
                 </Typography>
                 <TextField 
+                    value={title}
                     label="title" 
                     variant="outlined" 
                     onChange = {handleTitle}
                     />
                 <TextareaAutosize
+                    value={description}
                     minRows={10}
                     aria-label="empty textarea"
                     placeholder="Description"
