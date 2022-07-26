@@ -3,6 +3,7 @@ import { db} from '../../firebase'
 import { addDoc, collection } from 'firebase/firestore';
 import { storage } from '../../firebase'
 import { ref,uploadBytes,getDownloadURL } from 'firebase/storage'
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { LoadingButton } from '@mui/lab';
 import {Button,TextareaAutosize,Stack, TextField,Grid} from "@mui/material" 
@@ -18,6 +19,7 @@ export default function CreateBlog() {
     const [imageURL,setimageURL] = useState();
     const [user,setUser] = useState();
     const {currentUser} = useAuth();
+    const navigate = useNavigate();
 
     const handleDescription = (e) => {
         setDescription(e.target.value)
@@ -26,7 +28,7 @@ export default function CreateBlog() {
         setTitle(e.target.value)
     }
     const handleImage = (e) => {
-        setImage(e.target.files[0]);
+        setImage(e.target.files[0]);    
     }
     const uploadImage = async(e) => {
         const imageRef = ref(storage,`images/${image.name}`);
@@ -49,7 +51,7 @@ export default function CreateBlog() {
         await addDoc(blogCollectionRef,{title:title,description:description,image:imageURL,user:user}).then((response) => {
             setDescription("");
             setTitle("");
-            alert("uploaded")
+            navigate("/");
         }).catch((error) => {
             alert(error);
         }); 
@@ -61,13 +63,12 @@ export default function CreateBlog() {
 
 
   return (
-            <Stack spacing = {3} marginTop={1} padding ={2}
+            <Grid container>
+                <Stack spacing = {3} marginTop={1} padding ={2}
                 sx={{
-                        width: 400,
-                        position:"sticky",
-                        top:"0",
+                        width: 600,
                         borderRadius:"10px",
-                        boxShadow:"0px -1px 15px 2px rgba(196,196,196,1)"
+                        boxShadow:"0px -1px 15px 2px rgba(196,196,196,1)",
                         }}>
                 <TextField 
                     label="title" 
@@ -80,7 +81,7 @@ export default function CreateBlog() {
                     placeholder="Description"
                     onChange = {handleDescription}
                     />
-                <Stack direction="row" alignItems="center"> 
+                <Stack direction="row" alignItems="center" justifyContent="space-between"> 
                      
                     <input type="file"
                         onChange={handleImage}
@@ -102,5 +103,7 @@ export default function CreateBlog() {
                     Submit
                 </LoadingButton>
             </Stack>
+            </Grid>
+           
   )
 }

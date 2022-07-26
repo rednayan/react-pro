@@ -1,13 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import { db } from '../../firebase'
-import {doc,getDoc} from 'firebase/firestore'
-import {Card,Typography,CardContent,Stack,CardMedia,Box} from '@mui/material'
-import { useParams } from 'react-router-dom'
+import {doc,getDoc,deleteDoc} from 'firebase/firestore'
+import {Card,Typography,CardContent,Stack,CardMedia,Button,Box} from '@mui/material'
+import { useParams,useNavigate } from 'react-router-dom'
+import { useAuth } from '../../contexts/AuthContext'
 
 export default function DetailBlog(){
     const {id} = useParams();
     const [blog,setBlog] = useState();
     const docRef = doc(db, "Blogs", `${id}`);
+    const navigate = useNavigate();
+    const {currentUser} = useAuth();
+
+    const delDoc = async () => {
+      await deleteDoc(docRef).then(() => {
+          navigate("/");
+        })
+    }      
+    const handleDelete = async (e) =>{  
+      
+      await getDoc(docRef).then((response) => {
+        if(response.data().user === currentUser.email){
+          delDoc();
+          console.log("matched")
+        }else{
+          console.log("user doesnt match");
+        }
+      })
+
+    }
 
     useEffect(() =>{
         const getBlog = async() =>{
@@ -19,6 +40,13 @@ export default function DetailBlog(){
 
     return (
       <Box>
+        <Button 
+          variant = "text"
+          
+          onClick={handleDelete}
+          >
+          Delete champion
+        </Button>
       {blog && 
       <Stack alignItems = "center" justifyContent = "center" sx={{backgroundImage:`url(${blog.image})`,backgroundRepeat:"no-repeat",backgroundSize:"100%"}}>
                   <Card 
@@ -29,7 +57,7 @@ export default function DetailBlog(){
                       margin:"30px 0px 30px"
                       }}
               
-              >
+                >
                   <CardMedia
                       component="img"
                       image={blog.image}

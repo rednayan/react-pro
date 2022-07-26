@@ -21,33 +21,33 @@ export default function DisplayBlogs() {
     <Stack direction="row"  sx={{flexWrap:"wrap"}}>
     {blogs && blogs.map((blog) => {
         return(
-                <Card 
-                    sx={{ width: 425,
-                        margin:"10px",
-                        borderRadius:"10px",
-                        boxShadow:"0px -1px 15px 2px rgba(196,196,196,1)",
-                        backgroundColor:'#2c2c2e',
-                        color:"#ffffff"
-                        }}
-                
-                >
-                    <CardMedia
-                        onClick={() => navigate(`/blogs/detailblog/${blog.id}`)}
-                        component="img"
-                        image={blog.image}
-                        alt="Image "
-                        height="200px"
-                    />
+                    <Card 
+                        sx={{ width: 425,
+                            margin:"10px",
+                            borderRadius:"10px",
+                            boxShadow:"0px -1px 15px 2px rgba(196,196,196,1)",
+                            backgroundColor:'#2c2c2e',
+                            color:"#ffffff"
+                            }}
+                    
+                    >
+                        <CardMedia
+                            onClick={() => navigate(`/blogs/detailblog/${blog.id}`)}
+                            component="img"
+                            image={blog.image}
+                            alt="Image "
+                            height="200px"
+                        />
 
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="div" sx={{letterSpacing:"2px"}}>
-                            {blog.title}
-                        </Typography>
-                        <Typography gutterBottom variant="h7" component="div" sx={{letterSpacing:"1px"}}>
-                            Author : {blog.user}
-                        </Typography>
-                    </CardContent>
-                </Card>     
+                        <CardContent>
+                            <Typography gutterBottom variant="h5" component="div" sx={{letterSpacing:"2px"}}>
+                                {blog.title}
+                            </Typography>
+                            <Typography gutterBottom variant="h7" component="div" sx={{letterSpacing:"1px"}}>
+                                Author : {blog.user}
+                            </Typography>
+                        </CardContent>
+                    </Card>     
         )
     })}
     </Stack>

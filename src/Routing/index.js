@@ -13,6 +13,7 @@ import {
   import DetailBlog from "../component/DetailBlog";
   import PrivateRoute from "../component/PrivateRoute";
   import { useAuth } from "../contexts/AuthContext";
+import CreateBlog from "../component/CreateBlog";
 
 export default function Routing() {
   const {logout,currentUser}  = useAuth();
@@ -23,19 +24,21 @@ export default function Routing() {
     <>
     <AppBar position="static"  sx={{boxShadow:"none",backgroundColor:"#ffffff"}}>
             <Stack direction="row" spacing={1} sx={{width:"100%",height:"7vh"}}>
-                <Button component={Link} to={'/'}>Champions</Button>
-                <Button component={Link} to={'/university'}>University</Button>
+                <Button component={Link} to={'/'}>Champions Blog</Button>
+                {/* <Button component={Link} to={'/university'}>University</Button> */}
+                <Button component={Link} to={'/create-blog'}>Create Blog</Button>
                 {!currentUser? 
                   <Button component={Link} to={'/login'}>Login</Button> 
                   :
                   <Button onClick = {handleLogout}>Logout</Button>    
-              }
+                }
             </Stack>
           </AppBar>
           <Routes> 
               <Route exact path = "/login" element= {<Login />}></Route>
               <Route exact path="/*" element={<PrivateRoute><Blog/></PrivateRoute>} />
               <Route exact path = "/blogs/detailblog/:id" element= {<PrivateRoute><DetailBlog /></PrivateRoute>}></Route>
+              <Route exact path = "/create-blog" element= {<PrivateRoute><CreateBlog /></PrivateRoute>}></Route>
               <Route exact path = "/university" element= {<University />}></Route>
               <Route path="*" element={<PageNotFound />} />
           </Routes>
