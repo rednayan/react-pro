@@ -55,8 +55,6 @@ const SignIn = () => {
                 .then(() => navigate("/blogs"))
                 .catch((error) => {
                         setEmailError(true)
-                        setEmailErrorText("empty field");
-                        setPasswordErrorText("empty field");
                         setPasswordError(true);
                 })
                 setLoading(false);

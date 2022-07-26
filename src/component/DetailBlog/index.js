@@ -38,20 +38,26 @@ export default function DetailBlog(){
     },[])
 
     return (
-      <Box>
-        <Button 
-          variant = "text"
-          onClick={handleUpdate}
-          >
-          Upadte Blog
-        </Button>
-        <Button 
-          variant = "text"
-          onClick={handleDelete}
-          >
-          Delete Blog
-        </Button>
+      <>
       {blog && 
+      <Box>
+         {(currentUser.email === blog.user) && 
+        <Stack  direction="row" justifyContent="flex-end" spacing ={1} margin={1}>
+          <Button 
+            variant = "contained"
+            onClick={handleUpdate}
+            >
+            Update Blog
+          </Button>
+          <Button 
+            variant = "contained"
+            onClick={handleDelete}
+            sx={{backgroundColor:"#ff3a30"}}
+            >
+            Delete Blog
+          </Button>
+        </Stack>
+        }
       <Stack alignItems = "center" justifyContent = "center" sx={{backgroundImage:`url(${blog.image})`,backgroundRepeat:"no-repeat",backgroundSize:"100%"}}>
                   <Card 
                   sx={{ width: "80%",
@@ -72,7 +78,7 @@ export default function DetailBlog(){
                   </Card>
                   <CardContent sx={{position: "absolute",
                                     left: "50%",
-                                    transform: "translate(-50%, 185%)",
+                                    transform: "translate(-50%, 190%)",
                                     color:"#ffffff",
                                   }}>
                   <Typography variant="h2" component="div" sx={{textTransform:"uppercase",letterSpacing:"10px"}}>
@@ -100,7 +106,8 @@ export default function DetailBlog(){
                   </Stack>
                 </Card>    
         </Stack>
-      }
       </Box>
+      }
+      </>
   )
 }

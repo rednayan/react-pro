@@ -45,16 +45,18 @@ export default function UpdateBlog() {
             alert(error);
         })
     }
-
-    const handleSubmit = async(e) => {
-        e.preventDefault();
-        setSubmitLoading(true)
+    const updateBlog = async() =>{
         await updateDoc(docRef,{title:title,image:imageURL,description:description}).then(() =>{
             navigate("/");
           })
           .catch((error) =>{
             console.log(error)
           }) 
+    }
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        setSubmitLoading(true)
+        updateBlog();
         setSubmitLoading(false);
     }
     useEffect(() =>{

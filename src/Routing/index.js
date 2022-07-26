@@ -24,7 +24,7 @@ export default function Routing() {
   return (
     <>
     <AppBar position="static"  sx={{boxShadow:"none",backgroundColor:"#ffffff"}}>
-            <Stack direction="row" spacing={1} sx={{width:"100%",height:"7vh"}}>
+            <Stack direction="row" spacing={2} sx={{width:"100%"}}>
                 <Button component={Link} to={'/'}>Champions Blog</Button>
                 {/* <Button component={Link} to={'/university'}>University</Button> */}
                 <Button component={Link} to={'/create-blog'}>Create Blog</Button>

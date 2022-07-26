@@ -7,8 +7,8 @@ const Login = () => {
   const [activeTabId,setActiveTabId] = useState(0);
   return ( 
     <div> 
-          <Grid container sx={{height:"93vh"}}>
-            <Grid item xs={7} sx = {{backgroundImage:`url(${backgroundImg})`,backgroundRepeat:"no-repeat"}}>
+          <Grid container>
+            <Grid item xs={7} sx = {{backgroundImage:`url(${backgroundImg})`,backgroundRepeat:"no-repeat",height:"94vh"}}>
             </Grid>
             <Grid item xs={5}> 
               <Tabs 
