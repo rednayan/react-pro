@@ -13,7 +13,8 @@ import {
   import DetailBlog from "../component/DetailBlog";
   import PrivateRoute from "../component/PrivateRoute";
   import { useAuth } from "../contexts/AuthContext";
-import CreateBlog from "../component/CreateBlog";
+  import CreateBlog from "../component/CreateBlog";
+  import UpdateBlog from "../component/UpdateBlog";
 
 export default function Routing() {
   const {logout,currentUser}  = useAuth();
@@ -38,6 +39,7 @@ export default function Routing() {
               <Route exact path = "/login" element= {<Login />}></Route>
               <Route exact path="/*" element={<PrivateRoute><Blog/></PrivateRoute>} />
               <Route exact path = "/blogs/detailblog/:id" element= {<PrivateRoute><DetailBlog /></PrivateRoute>}></Route>
+              <Route exact path = "/blogs/detailblog/:id/update" element= {<PrivateRoute><UpdateBlog /></PrivateRoute>}></Route>
               <Route exact path = "/create-blog" element= {<PrivateRoute><CreateBlog /></PrivateRoute>}></Route>
               <Route exact path = "/university" element= {<University />}></Route>
               <Route path="*" element={<PageNotFound />} />

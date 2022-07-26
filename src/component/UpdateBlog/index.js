@@ -1,19 +1,22 @@
 import React,{useEffect, useState} from 'react'
 import { db} from '../../firebase'
-import { addDoc, collection } from 'firebase/firestore';
+import { doc,getDoc,addDoc, collection,updateDoc } from 'firebase/firestore';
 import { storage } from '../../firebase'
 import { ref,uploadBytes,getDownloadURL } from 'firebase/storage'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useParams } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { LoadingButton } from '@mui/lab';
 import {Button,TextareaAutosize,Stack, TextField,Grid,Typography} from "@mui/material" 
 
 
-export default function CreateBlog() {
+export default function UpdateBlog() {
+    const {id} = useParams();
+    const docRef = doc(db, "Blogs", `${id}`);
+
+
     const [description,setDescription] = useState();
     const [image,setImage] = useState();
     const [title,setTitle] = useState();
-    const blogCollectionRef = collection(db,"Blogs");
     const [imageLoading,setImageLoading] = useState(false);
     const [submitLoading,setSubmitLoading] = useState(false);
     const [imageURL,setimageURL] = useState();
@@ -48,17 +51,22 @@ export default function CreateBlog() {
     const handleSubmit = async(e) => {
         e.preventDefault();
         setSubmitLoading(true)
-        await addDoc(blogCollectionRef,{title:title,description:description,image:imageURL,user:user}).then((response) => {
-            setDescription("");
-            setTitle("");
+        await updateDoc(docRef,{title:title,image:imageURL,description:description}).then(() =>{
             navigate("/");
-        }).catch((error) => {
-            alert(error);
-        }); 
+          })
+          .catch((error) =>{
+            console.log(error)
+          }) 
         setSubmitLoading(false);
     }
     useEffect(() =>{
         setUser(currentUser.email)
+        // const getDocDetails = async (e) =>{  
+        //     await getDoc(docRef).then((response) => {
+        //         setTitle(response.data().title);
+        //     })
+        //   }
+        // getDocDetails();
     },[])
 
 
@@ -71,7 +79,7 @@ export default function CreateBlog() {
                         boxShadow:"0px -1px 15px 2px rgba(196,196,196,1)",
                         }}>
                 <Typography variant="h5" component="div" sx={{letterSpacing:"3px",textTransform:"uppercase"}}>
-                               Create Champion Blog
+                               Update Champion Blog
                 </Typography>
                 <TextField 
                     label="title" 
@@ -103,7 +111,7 @@ export default function CreateBlog() {
                     variant = "contained"
                     onClick={handleSubmit}
                     >
-                    Submit
+                    Update
                 </LoadingButton>
             </Stack>
             </Grid>

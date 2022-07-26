@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { db } from '../../firebase'
-import {doc,getDoc,deleteDoc} from 'firebase/firestore'
-import {Card,Typography,CardContent,Stack,CardMedia,Button,Box} from '@mui/material'
+import {doc,getDoc,deleteDoc, updateDoc} from 'firebase/firestore'
+import {Card,Typography,CardContent,Stack,CardMedia,Button,Grid,Box} from '@mui/material'
 import { useParams,useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 
@@ -16,18 +16,17 @@ export default function DetailBlog(){
       await deleteDoc(docRef).then(() => {
           navigate("/");
         })
-    }      
+    }    
+
     const handleDelete = async (e) =>{  
-      
       await getDoc(docRef).then((response) => {
         if(response.data().user === currentUser.email){
           delDoc();
-          console.log("matched")
-        }else{
-          console.log("user doesnt match");
         }
       })
-
+    }
+    const handleUpdate = () =>{
+      navigate(`/blogs/detailblog/${id}/update`);
     }
 
     useEffect(() =>{
@@ -42,10 +41,15 @@ export default function DetailBlog(){
       <Box>
         <Button 
           variant = "text"
-          
+          onClick={handleUpdate}
+          >
+          Upadte Blog
+        </Button>
+        <Button 
+          variant = "text"
           onClick={handleDelete}
           >
-          Delete champion
+          Delete Blog
         </Button>
       {blog && 
       <Stack alignItems = "center" justifyContent = "center" sx={{backgroundImage:`url(${blog.image})`,backgroundRepeat:"no-repeat",backgroundSize:"100%"}}>
